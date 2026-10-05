@@ -1,1 +1,7 @@
-test/links.json
+.ruby-lsp/
+db/
+links.json
+test/*.sqlite3
+test/*.sqlite3-shm
+test/*.sqlite3-wal
+tmp/

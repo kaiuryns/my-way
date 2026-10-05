@@ -1,28 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>MyWay</title>
-    <style>
-      body { font-family: system-ui, sans-serif; max-width: 480px; margin: 4rem auto; padding: 0 1rem;}
-      form { display: flex; flex-direction: column; gap: .5rem; }
-      input, button { padding: .6rem; font-size: 1rem; }
-      button { cursor:pointer; }
-    </style>
-  </head>
-  <body>
-    <h1>MyWay</h1>
-    <form action="/shorten" method="post">
-      <input name="url" placeholder="https://..." required>
-      <input name="code" placeholder="custom code (optional)">
-      <button>Shorten</button>
-    </form>
-    <% if message %>
-      <% if message.start_with?('http') %>
-        <p><a href="<%= message %>"><%= message %></a></p>
-      <% else %>
-        <p><%= message %></p>
-      <% end %>
-    <% end %>
-  </body>
-</html>
+<form action="/shorten" method="post">
+  <input name="url" type="url" placeholder="https://..." required>
+  <input name="code" placeholder="custom code (optional)">
+  <button>Shorten</button>
+</form>
+
+<% if link_url %>
+  <p class="notice success" role="status">Short link: <a href="<%= h(link_url) %>"><%= h(link_url) %></a></p>
+<% elsif message %>
+  <p class="notice error" role="alert"><%= h(message) %></p>
+<% end %>
