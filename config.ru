@@ -8,6 +8,6 @@
 # MyWay.boot! runs from the app's `configure` block, so the database is opened
 # and migrated here: a broken setup fails at boot instead of on the first hit.
 
-require_relative "app/controllers/application"
+require_relative 'app/controllers/application'
 
 run MyWay::Application

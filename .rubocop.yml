@@ -1,0 +1,15 @@
+AllCops:
+  TargetRubyVersion: 3.4
+  NewCops: enable
+
+Naming/VariableNumber:
+  CheckMethodNames: false
+
+Metrics/MethodLength:
+  Exclude:
+    - 'test/**/*'
+
+Metrics/AbcSize:
+  Exclude:
+    - 'test/**/*'
+

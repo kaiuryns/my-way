@@ -1,5 +1,5 @@
 .ruby-lsp/
-db/
+/db/
 links.json
 test/*.sqlite3
 test/*.sqlite3-shm

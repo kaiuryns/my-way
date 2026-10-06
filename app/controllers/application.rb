@@ -1,14 +1,18 @@
 # frozen_string_literal: true
 
-require "sinatra/base"
+require 'sinatra/base'
 
-require_relative "../my_way"
-require_relative "../helpers/app_helpers"
+require_relative '../my_way'
+require_relative '../helpers/app_helpers'
 
 module MyWay
+  # Sinatra app that serves the URL shortener.
+  #
+  # Renders the form, creates short links through ShortenLink and redirects
+  # short codes to their original URLs, answering 404 for unknown codes.
   class Application < Sinatra::Base
     set :root, MyWay::APP_ROOT
-    set :views, File.join(MyWay::APP_ROOT, "app", "views")
+    set :views, File.join(MyWay::APP_ROOT, 'app', 'views')
     set :container, MyWay
 
     helpers AppHelpers
@@ -17,18 +21,18 @@ module MyWay
       MyWay.boot!
     end
 
-    get "/" do
+    get '/' do
       erb :index, locals: { message: nil, link_url: nil }
     end
 
-    get "/:code" do
+    get '/:code' do
       link = settings.container.repository.find_by_code(params[:code])
       halt render_not_found unless link
 
       redirect link.url, 302
     end
 
-    post "/shorten" do
+    post '/shorten' do
       outcome = settings.container.shorten_link.call(url: params[:url], code: params[:code])
       render_outcome(outcome)
     end
