@@ -1,24 +1,24 @@
 # frozen_string_literal: true
 
-require "json"
-require "rake/testtask"
+require 'json'
+require 'rake/testtask'
 
 Rake::TestTask.new(:test) do |t|
-  t.libs << "test"
-  t.libs << "."
-  t.test_files = FileList["test/**/*_test.rb"]
+  t.libs << 'test'
+  t.libs << '.'
+  t.test_files = FileList['test/**/*_test.rb']
   t.warning = true
 end
 
-desc "Run the app via config.ru"
+desc 'Run the app via config.ru'
 task :run do
-  sh "bundle exec rackup"
+  sh 'bundle exec rackup'
 end
 
 namespace :db do
-  desc "Import the legacy links.json file (url => code) into SQLite"
+  desc 'Import the legacy links.json file (url => code) into SQLite'
   task :import do
-    require_relative "app/my_way"
+    require_relative 'app/my_way'
 
     MyWay.boot!
     path = MyWay::LEGACY_LINKS_FILE

@@ -1,16 +1,17 @@
 # frozen_string_literal: true
 
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
-gem "sinatra", "~> 4.2"
+gem 'sinatra', '~> 4.2'
 
-gem "puma", "~> 8.0"
+gem 'puma', '~> 8.0'
 
-gem "rackup", "~> 2.3"
+gem 'rackup', '~> 2.3'
 
-gem "sqlite3", "~> 2.9"
+gem 'sqlite3', '~> 2.9'
 
-gem "rake", "~> 13.2"
+gem 'rake', '~> 13.2'
 
-gem "minitest", "~> 6.0", group: :test
-gem "rack-test", "~> 2.2", group: :test
+gem 'minitest', '~> 6.0', group: :test
+gem 'rack-test', '~> 2.2', group: :test
+gem 'rubocop', '~> 1.91', groups: %i[development test], require: false

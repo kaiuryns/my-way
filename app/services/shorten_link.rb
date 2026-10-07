@@ -1,18 +1,23 @@
 # frozen_string_literal: true
 
 module MyWay
+  # Creates a short link for a URL, using a custom code or a generated one.
+  #
+  # Returns an Outcome whose status is :created or :exists on success, or a
+  # failure such as :invalid_url, :invalid_code, :code_taken, :url_taken or
+  # :exhausted.
   class ShortenLink
     Outcome = Data.define(:status, :link, :message) do
       def success?
-        status == :created || status == :exists
+        %i[created exists].include?(status)
       end
     end
 
     MESSAGES = {
-      invalid_url: "Invalid URL",
-      invalid_code: "Invalid code",
-      code_taken: "Code already in use",
-      exhausted: "Cant generate a code, try a custom one"
+      invalid_url: 'Invalid URL',
+      invalid_code: 'Invalid code',
+      code_taken: 'Code already in use',
+      exhausted: 'Cant generate a code, try a custom one'
     }.freeze
 
     def initialize(repository:)
@@ -26,11 +31,7 @@ module MyWay
       return failure(:invalid_url) unless Link.valid_url?(url)
 
       existing = repository.find_by_url(url)
-      if existing
-        return outcome(:exists, link: existing) if code.empty? || code == existing.code
-
-        return failure(:url_taken, message: "URL already has code #{existing.code}")
-      end
+      return resolve_existing(existing, code) if existing
 
       if code.empty?
         create_with_generated_code(url)
@@ -63,6 +64,12 @@ module MyWay
       return outcome(:exists, link: winner) if winner
 
       failure(:exhausted)
+    end
+
+    def resolve_existing(existing, code)
+      return outcome(:exists, link: existing) if code.empty? || code == existing.code
+
+      failure(:url_taken, message: "URL already has code #{existing.code}")
     end
 
     def outcome(status, link: nil)

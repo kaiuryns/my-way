@@ -1,34 +1,34 @@
 # frozen_string_literal: true
 
-require_relative "test_helper"
+require_relative 'test_helper'
 
 class LinkTest < Minitest::Test
   def test_valid_url_accepts_http_and_https
-    assert MyWay::Link.valid_url?("http://ruby-lang.org")
-    assert MyWay::Link.valid_url?("https://ruby-lang.org")
-    assert MyWay::Link.valid_url?("https://ruby-lang.org/docs?q=1#top")
+    assert MyWay::Link.valid_url?('http://ruby-lang.org')
+    assert MyWay::Link.valid_url?('https://ruby-lang.org')
+    assert MyWay::Link.valid_url?('https://ruby-lang.org/docs?q=1#top')
   end
 
   def test_valid_url_rejects_other_schemes_and_junk
-    refute MyWay::Link.valid_url?("ftp://ruby-lang.org")
-    refute MyWay::Link.valid_url?("javascript:alert(1)")
-    refute MyWay::Link.valid_url?("banana")
-    refute MyWay::Link.valid_url?("https://")
+    refute MyWay::Link.valid_url?('ftp://ruby-lang.org')
+    refute MyWay::Link.valid_url?('javascript:alert(1)')
+    refute MyWay::Link.valid_url?('banana')
+    refute MyWay::Link.valid_url?('https://')
     refute MyWay::Link.valid_url?(nil)
-    refute MyWay::Link.valid_url?("")
-    refute MyWay::Link.valid_url?("http://exa mple.com")
+    refute MyWay::Link.valid_url?('')
+    refute MyWay::Link.valid_url?('http://exa mple.com')
   end
 
   def test_valid_code_bounds
-    assert MyWay::Link.valid_code?("abc")
-    assert MyWay::Link.valid_code?("a-b_C9")
-    assert MyWay::Link.valid_code?("a" * 30)
+    assert MyWay::Link.valid_code?('abc')
+    assert MyWay::Link.valid_code?('a-b_C9')
+    assert MyWay::Link.valid_code?('a' * 30)
 
-    refute MyWay::Link.valid_code?("ab")
-    refute MyWay::Link.valid_code?("a" * 31)
-    refute MyWay::Link.valid_code?("has space")
-    refute MyWay::Link.valid_code?("slash/es")
-    refute MyWay::Link.valid_code?("dot.dot")
+    refute MyWay::Link.valid_code?('ab')
+    refute MyWay::Link.valid_code?('a' * 31)
+    refute MyWay::Link.valid_code?('has space')
+    refute MyWay::Link.valid_code?('slash/es')
+    refute MyWay::Link.valid_code?('dot.dot')
     refute MyWay::Link.valid_code?(nil)
   end
 
@@ -60,8 +60,8 @@ class LinkTest < Minitest::Test
   end
 
   def test_to_h
-    link = MyWay::Link.new(code: "abc12", url: "https://example.com")
+    link = MyWay::Link.new(code: 'abc12', url: 'https://example.com')
 
-    assert_equal({ code: "abc12", url: "https://example.com" }, link.to_h)
+    assert_equal({ code: 'abc12', url: 'https://example.com' }, link.to_h)
   end
 end

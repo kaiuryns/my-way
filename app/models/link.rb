@@ -1,11 +1,15 @@
 # frozen_string_literal: true
 
-require "securerandom"
-require "uri"
+require 'securerandom'
+require 'uri'
 
 module MyWay
   Link = Data.define(:code, :url)
-
+  # Immutable short link (code and original URL).
+  #
+  # Also holds the domain rules: URL and custom code validation, and
+  # generation of random codes that avoid collisions through a `reject`
+  # callback.
   class Link
     CODE_FORMAT = /\A[A-Za-z0-9_-]{3,30}\z/
     CODE_LENGTH = 5

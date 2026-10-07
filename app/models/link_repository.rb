@@ -1,8 +1,13 @@
 # frozen_string_literal: true
 
 module MyWay
+  # Persistence layer for links, backed by SQLite.
+  #
+  # Looks links up by code or URL and inserts new ones, returning `Link`
+  # objects instead of raw rows. `insert` reports a unique-constraint
+  # violation as `false` rather than raising.
   class LinkRepository
-    SELECT_COLUMNS = "code, url"
+    SELECT_COLUMNS = 'code, url'
 
     def initialize(database)
       @database = database
@@ -21,7 +26,7 @@ module MyWay
     end
 
     def insert(link)
-      database.prepare("INSERT INTO links (code, url) VALUES (?, ?)") do |statement|
+      database.prepare('INSERT INTO links (code, url) VALUES (?, ?)') do |statement|
         statement.execute(link.code, link.url)
       end
 
@@ -31,7 +36,7 @@ module MyWay
     end
 
     def count
-      database.get_first_value("SELECT COUNT(*) FROM links")
+      database.get_first_value('SELECT COUNT(*) FROM links')
     end
 
     private
@@ -47,7 +52,7 @@ module MyWay
     def row_to_link(row)
       return nil if row.nil?
 
-      Link.new(code: row["code"], url: row["url"])
+      Link.new(code: row['code'], url: row['url'])
     end
   end
 end
